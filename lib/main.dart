@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:messenger_app/homePage.dart';
 import 'package:messenger_app/loginPage.dart';
+import 'package:messenger_app/productPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       // home: Loginpage(),
-      home: Homepage(),
+      // home: Homepage(),
+      home: Productpage(),
     );
   }
 }

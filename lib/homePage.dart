@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:messenger_app/message_item_widget.dart';
+import 'package:messenger_app/models/product_model.dart';
 import 'package:messenger_app/story_item_widget.dart';
+
+import 'dio/api_provider.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -163,6 +166,11 @@ class _HomepageState extends State<Homepage> {
 
     ),
   ];
+
+
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
