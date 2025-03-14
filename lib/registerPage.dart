@@ -1,17 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:messenger_app/dio/api_provider.dart';
-import 'package:messenger_app/registerPage.dart';
+import 'package:messenger_app/loginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Loginpage extends StatefulWidget {
-  const Loginpage({super.key});
+import 'dio/api_provider.dart';
+
+class Registerpage extends StatefulWidget {
+  const Registerpage({super.key});
 
   @override
-  State<Loginpage> createState() => _LoginpageState();
+  State<Registerpage> createState() => _RegisterpageState();
 }
 
-class _LoginpageState extends State<Loginpage> {
+class _RegisterpageState extends State<Registerpage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
@@ -23,7 +24,7 @@ class _LoginpageState extends State<Loginpage> {
         backgroundColor: Color(0xff367849),
         title: Center(
           child: Text(
-            "Login",
+            "Register",
             style: TextStyle(
               fontSize: 30,
               color: Colors.white,
@@ -54,7 +55,7 @@ class _LoginpageState extends State<Loginpage> {
                 // ),
                 SizedBox(height: 20),
                 Text(
-                  "User Login",
+                  "User Register",
                   style: TextStyle(
                     fontSize: 30,
                     color: Color(0xff367849),
@@ -68,9 +69,10 @@ class _LoginpageState extends State<Loginpage> {
                     bool validateEmail = RegExp(
                       '^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]',
                     ).hasMatch(value!);
-                    if (value.isEmpty) return "Email must not be empty";
-                    // else if (!validateEmail)
-                    //   return "Invalid Email";
+                    if (value.isEmpty)
+                      return "Email must not be empty";
+                    else if (!validateEmail)
+                      return "Invalid Email";
 
                     return null;
                   },
@@ -129,33 +131,12 @@ class _LoginpageState extends State<Loginpage> {
                   ),
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      // print(emailController.text);
-                      // print(passwordController.text);
-                      // await ApiProvider()
-                      //     .userLoginEmail(
-                      //       email: emailController.text,
-                      //       password: passwordController.text,
-                      //     )
-                      //     .then((value) {
-                      //       ScaffoldMessenger.of(context).showSnackBar(
-                      //         SnackBar(content: Text("login Success")),
-                      //       );
-                      //     })
-                      //     .catchError((error) {
-                      //       ScaffoldMessenger.of(context).showSnackBar(
-                      //         SnackBar(content: Text(error.toString())),
-                      //       );
-                      //     });
-                      // formKey.currentState!.reset();
                       try {
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        await FirebaseAuth.instance.createUserWithEmailAndPassword(
                           email: emailController.text,
                           password: passwordController.text,
                         );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Login Successful")),
-                        );
-
+                        print("User Registered Successfully");
                         formKey.currentState!.reset();
                       } catch (e) {
                         print("Error: $e");
@@ -163,38 +144,26 @@ class _LoginpageState extends State<Loginpage> {
                           SnackBar(content: Text("Error: ${e.toString()}")),
                         );
                       }
-
-                      // await FirebaseAuth.instance.sendPasswordResetEmail(
-                      //         email: emailController.text,
-                      //       );
                     }
-                    // final SharedPreferences prefs =
-                    //     await SharedPreferences.getInstance();
-                    // String tokenfromshared = prefs.getString("token")!;
                   },
                   child: Text(
-                    "Login",
+                    "REGISTER",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   color: Color(0xff367849),
                 ),
                 Row(
                   children: [
-                    Text(
-                      "Don't have an account",
-                      style: TextStyle(fontSize: 15),
-                    ),
+                    Text(" have an account", style: TextStyle(fontSize: 15)),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => Registerpage(),
-                          ),
+                          MaterialPageRoute(builder: (context) => Loginpage()),
                         );
                       },
                       child: Text(
-                        "Sign Up",
+                        "Login NOW",
                         style: TextStyle(
                           color: Color(0xff367849),
                           fontWeight: FontWeight.bold,
